@@ -2,26 +2,18 @@ function gps(s, x) {
     
     if  (x.length <= 1) {return 0}
 
-    let sections = []
+    let hourlySpeed  = []
 
     //Разбиение расстояния на участки  
     for (let i = 0; i < x.length-1; i++) {
-        sections.push(x.slice(i,i+2))
-
+        hourlySpeed.push((3600 * (x[i+1]- x[i]) / s))
     }
-    //Определение средней почасовой скорости на каждом участке пути
-    let hourlySpeed = sections.map(function spaeed (section) {
-        let deltaDistance  = (section[1]-section[0]);
-        let hourlySpeed = Math.floor((3600 * deltaDistance) / s);
-        return hourlySpeed
-    })
-    //Цело максимальное средней скорости в час
-     return hourlySpeed.sort(function (a,b) {
-         return b - a 
-     })[0]
+    return Math.floor(Math.max(...hourlySpeed))
+
 }
 
-const seconds = 20;
-const x = [];
-
+/*
+const seconds = 15;
+const x = [0.0, 0.19, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25];
 console.log(gps(seconds,x))
+*/
